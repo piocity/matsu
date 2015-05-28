@@ -1,0 +1,36 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="{% static 'status/style.css' %}" />
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css' />
+        <title>{% block title %}{% endblock %} BlueLight</title>
+    </head>
+
+    <body>
+        <ul>
+        {% if user.is_authenticated %}
+            <h2>Hello, {{ user.username }}.</h2>
+            <li><a href="{% url 'account:user_logout' %}">Logout</a></li>
+            <li><a href="{% url 'video:upload' %}">Upload</a></li>
+        {% else %}
+            <li><a href="{% url 'account:user_login' %}">Login</a></li>
+            <li><a href="{% url 'account:signup' %}">Signup</a></li>
+        {% endif %}
+        <li><a href="https://ipv6.google.com/">About</a></li>
+        </ul><br />
+
+        <form action="{% url 'video:search' %}" method="get">
+            <input type="text" name="q" placeholder="Search">
+            <input type="submit">
+        </form>
+        <br />
+
+        {% endif %}
+        {% block body_block %}Default contents to be extended.{% endblock %}
+
+
+    </body>
+</html>

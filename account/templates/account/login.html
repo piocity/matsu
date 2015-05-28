@@ -1,0 +1,21 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Signin{% endblock %}
+
+{% block body_block %}
+<h2>Signin to continue to BlueLight</h2>
+{% if error_msg %}
+<p><em>{{ error_msg }}</em></p>
+{% else %}
+
+<form method="post" action="{% url 'account:user_login' %}">
+    {% csrf_token %}
+    Username: <input type="text" name="username" value="" /><br />
+    Password: <input type="password" name="password" value="" /><br />
+    <input type="submit" value="Signin" />
+</form>
+{% endif %}
+
+<br />
+<a href="{% url 'account:signup' %}">Create an account</a>
+{% endblock %}

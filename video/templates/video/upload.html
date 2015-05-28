@@ -1,0 +1,28 @@
+{% extends 'video/base.html' %}
+
+{% block title %}Upload your video clip{% endblock %}
+
+{% block body_block %}
+
+{% if uploaded %}
+<p>You have uploaded your video clip, congrats!</p>
+<a href="{% url 'index' %}">Back to Homepage</a>
+
+{% else %}
+{% if error_msg %}
+<p><em>{{ error_msg }}</em></p>
+{% endif %}
+<h2>We're expecting your video clips.</h2>
+<form method="post" action="{% url 'video:upload' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+<!--    Title: <input type="text" name="title" placeholder="Title" /><br />
+    Description: <br /><textarea rows="10" cols="40" placeholder="Description" /></textarea><br />
+-->
+
+        {{ form.as_p }}
+
+    <input type="submit" value="Upload now" />
+</form>
+
+{% endif %}
+{% endblock %}

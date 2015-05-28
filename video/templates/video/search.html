@@ -1,0 +1,14 @@
+{% extends 'video/base.html' %}
+
+{% block title %}Search {% endblock %}
+
+{% block body_block %}
+    {% if results %}
+    <h2 background-color="yellow">Search Results</h2>
+    {% for r in results %}
+    <h3><a href="{% url 'video:playback' r.id %}">{{ r.title }}</a></h3>
+    <h4>by {{ r.author }}</h4>
+    <br />
+    {% endfor %}
+    {% endif %}
+{% endblock %}

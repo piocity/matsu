@@ -1,0 +1,12 @@
+{% extends 'bluelight/base.html' %}
+
+{% block title %}BlueLight{% endblock %}
+
+{% block body_block %}
+{% for l in latest_videos %}
+<h3><a href="{% url 'video:playback' l.id %}">{{ l.title }}</a></h3>
+<h4>by {{ l.author }}</h4>
+<br />
+{% endfor %}
+{% endblock %}
+

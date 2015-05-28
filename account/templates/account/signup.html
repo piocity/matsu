@@ -1,0 +1,21 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Signup{% endblock %}
+
+{% block body_block %}
+<h2>Create your BlueLight Account</h2>
+{% if registered %}
+<p>Thank you for signup!</p>
+{% else %}
+<form method="post" action="{% url 'account:signup' %}">
+    {% csrf_token %}
+    Username: <input type="text" name="username" value="" /><br />
+    Password: <input type="password" name="password" value="" /><br />
+    <!--    Retype password: <input type="password" name="password2" value="" /><br /> -->
+    <input type="submit" value="Signup" />
+</form>
+
+{% endif %}
+<br />
+<a href="{% url 'account:user_login' %}">Already have an account?</a>
+{% endblock %}

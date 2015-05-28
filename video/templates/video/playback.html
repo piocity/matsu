@@ -1,0 +1,25 @@
+{% extends 'video/base.html' %}
+
+{% block title %}Playback{% endblock %}
+
+{% block body_block %}
+<video width="640" height="325" controls>
+    <source src="{{ video.video_clip.url }}" type="video/mp4">
+    You need a modern HTML5-supported browser to play the video.
+</video>
+<br />
+<h2>{{ video.title }}</h2>
+<h4>{{ video.author }}</h4>
+<h4>Published on {{ video.upload_time }}</h4>
+<br />
+<h4>All comments</h4>
+<form action="{% url 'comment:add' video.id  %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" />
+</form>
+{% for c in comments %}
+<p>{{ c.author }}    {{ c.com_time }}<br />
+{{ c.contents }}</p>
+{% endfor %}
+{% endblock %}
