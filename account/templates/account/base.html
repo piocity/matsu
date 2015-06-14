@@ -10,9 +10,10 @@
     </head>
 
     <body>
+        <a href="/"><image src="{% static "bluelight/logo.png" %}" alt="Site Logo"/></a>
         <ul>
         {% if user.is_authenticated %}
-            <h2>Hello, {{ user.username }}.</h2>
+            Hello, {{ user.username }}.
             <li><a href="{% url 'account:user_logout' %}">Logout</a></li>
         {% else %}
             <li><a href="{% url 'account:user_login' %}">Login</a></li>

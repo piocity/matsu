@@ -32,3 +32,28 @@ def add(request, video_id):
         form = CommentForm()
         return render(request, 'video/playback.html', {'form': form})
 
+@login_required(login_url='/account/login/')
+def add2(request, video_id, parent_id):
+    video = get_object_or_404(Video, pk=video_id)
+    parent = get_object_or_404(Comment, pk=parent_id)
+    context = {'video': video, 'parent': parent,}
+    replied = False
+
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.video = video
+            post.parent = parent
+            post.save()
+            replied = True
+            return HttpResponseRedirect(reverse('video:playback', kwargs={'video_id': video_id}))
+        else:
+            print(form.errors)
+            err_context = {'video': video, 'error_msg': "Form is not properly filledin."}
+            return render(request, 'comment/error.html', err_context)
+    else:
+        form = CommentForm()
+        return render(request, 'video/playback2.html', {'form': form, 'parent': parent, 'video_id': video_id, 'parent_id': parent_id})
+

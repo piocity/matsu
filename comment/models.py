@@ -12,6 +12,7 @@ class Comment(models.Model):
     com_time = models.DateTimeField('Creation', default=timezone.now)
     author = models.ForeignKey(User)
     video = models.ForeignKey(Video)
+    parent = models.ForeignKey('self', null=True, related_name='replies')
 
     def __str__(self):
         return self.contents

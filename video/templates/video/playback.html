@@ -1,9 +1,14 @@
 {% extends 'video/base.html' %}
+{% load disqus_tags %}
+{% set_disqus_identifier "page_" page.pk %}
+{% set_disqus_title page.title %}
+{% disqus_show_comments %}
+{% disqus_dev %}
 
 {% block title %}Playback{% endblock %}
 
 {% block body_block %}
-<video width="640" height="325" controls>
+<video controls width="640" height="325">
     <source src="{{ video.video_clip.url }}" type="video/mp4">
     You need a modern HTML5-supported browser to play the video.
 </video>
@@ -18,8 +23,17 @@
     {{ form.as_p }}
     <input type="submit" />
 </form>
-{% for c in comments %}
-<p>{{ c.author }}    {{ c.com_time }}<br />
-{{ c.contents }}</p>
+{% for c1 in comments %}
+{% if c1.parent == None %}
+<p>{{ c1.author }}    {{ c1.com_time }}<br />
+{{ c1.contents }}<br />
+<a href="{% url 'comment:add2' video.id c1.id %}">Reply</a></p>
+{% endif %}
+{% for c2 in comments %}
+{% if c2.parent == c1 %}
+<p class="tab">{{ c2.author }} {{ c2.com_time }}<br />
+{{ c2.contents }}
+{% endif %}
+{% endfor %}
 {% endfor %}
 {% endblock %}

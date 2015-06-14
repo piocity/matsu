@@ -1,0 +1,24 @@
+{% extends 'video/base.html' %}
+{% load disqus_tags %}
+{% set_disqus_identifier "page_" page.pk %}
+{% set_disqus_title page.title %}
+{% disqus_show_comments %}
+{% disqus_dev %}
+
+{% block title %}Playback{% endblock %}
+
+{% block body_block %}
+<h2>{{ video.title }}</h2>
+<h4>{{ video.author }}</h4>
+<h4>Published on {{ video.upload_time }}</h4>
+<br />
+<h4>Reply to</h4>
+
+<p>{{ parent.author }} {{ parent.com_time }}<br />
+{{ parent.contents }}<br />
+<form action="{% url 'comment:add2' video_id parent_id %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" />
+</form>
+{% endblock %}
